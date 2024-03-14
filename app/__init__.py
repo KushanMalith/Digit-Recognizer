@@ -4,7 +4,7 @@ from .model.digit_recognizer import build_model, predict_digit
 import numpy as np
 from PIL import Image
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Load your model here
 model = build_model()
