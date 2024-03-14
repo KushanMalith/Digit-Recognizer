@@ -1,8 +1,13 @@
 from flask import Flask, request, render_template
 import os
-from .model.digit_recognizer import build_model, predict_digit
+import sys
 import numpy as np
 from PIL import Image
+
+# Append the parent directory to the system path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model')))
+
+from digit_recognizer import build_model, predict_digit
 
 app = Flask(__name__)
 
