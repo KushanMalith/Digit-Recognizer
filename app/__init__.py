@@ -1,29 +1,23 @@
-from flask import Flask, render_template, request
-from model.digit_recognizer import build_model, predict_digit
+from flask import Flask, request, render_template
 import os
+from .model.digit_recognizer import build_model, predict_digit
+import numpy as np
+from PIL import Image
 
-app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app = Flask(_name_)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+# Load your model here
+model = build_model()
 
-@app.route('/upload', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return render_template('index.html', error='No file part')
         file = request.files['file']
-        if file.filename == '':
-            return render_template('index.html', error='No selected file')
         if file:
-            filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filename)
-            model = build_model()  # Build the digit recognition model
-            digit = predict_digit(model, filename)  # Predict the digit
-            return render_template('index.html', digit=digit)
+            image = Image.open(file.stream).convert('L')  # Convert to grayscale
+            image = image.resize((28, 28)) 
+            image = np.array(image) / 255.0 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+            digit = predict_digit(model, image)
+            return render_template('index.html', digit=digit)
+    return render_template('index.html')
