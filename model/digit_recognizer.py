@@ -1,8 +1,9 @@
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Flatten, Dense
+import pandas as pd               # Import pandas library for data manipulation
+import numpy as np                # Import numpy library for numerical computations
+from sklearn.model_selection import train_test_split  # Import train_test_split function from scikit-learn for splitting data
+from tensorflow.keras import Sequential              # Import Sequential model from TensorFlow Keras for building neural networks
+from tensorflow.keras.layers import Flatten, Dense, Dropout, BatchNormalization  # Import layers from TensorFlow Keras for building neural networks
+from tensorflow.keras.callbacks import EarlyStopping  # Import EarlyStopping callback from TensorFlow Keras for early stopping during training
 
 # Load datasets
 train_data = pd.read_csv('data/train.csv')
@@ -19,7 +20,12 @@ X_train = X_train.values.reshape(-1, 28, 28)
 def build_model():
     model = Sequential([
         Flatten(input_shape=(28, 28)),  # Flatten the input images
+        Dense(512, activation='relu'),  # Hidden layer with 512 neurons
+        Dropout(0.3),  # Dropout layer to prevent overfitting
+        Dense(256, activation='relu'),  # Hidden layer with 256 neurons
+        Dropout(0.3),  # Dropout layer
         Dense(128, activation='relu'),  # Hidden layer with 128 neurons
+        BatchNormalization(),  # Batch normalization layer for faster convergence
         Dense(10, activation='softmax')  # Output layer with 10 neurons (for 10 digits)
     ])
     model.compile(optimizer='adam',
@@ -28,9 +34,10 @@ def build_model():
     return model
 
 # Train the model
-def train_model(model, epochs=10):
+def train_model(model, epochs=50):
     X_train_data, X_val, y_train_data, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
-    history = model.fit(X_train_data, y_train_data, epochs=epochs, validation_data=(X_val, y_val))
+    early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)  # Early stopping to prevent overfitting
+    history = model.fit(X_train_data, y_train_data, epochs=epochs, validation_data=(X_val, y_val), callbacks=[early_stopping])
     return history
 
 # Predict digits
@@ -39,3 +46,11 @@ def predict_digit(model, image):
     prediction = model.predict(image)
     digit = np.argmax(prediction)
     return digit
+
+# Build and train the model
+model = build_model()
+history = train_model(model)
+
+# Evaluate the model
+loss, accuracy = model.evaluate(X_val, y_val)
+print("Validation Accuracy:", accuracy)
