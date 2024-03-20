@@ -11,12 +11,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'm
 # Import functions from the digit_recognizer module
 from digit_recognizer import build_model, predict_digit
 
-# Create a Flask application instance
-app = Flask(__name__)
-
-# Load the trained model
-model = build_model()
-
 # Define a route for handling file uploads
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
