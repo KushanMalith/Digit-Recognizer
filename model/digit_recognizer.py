@@ -64,3 +64,16 @@ def train_model_with_augmentation(model, X_train, y_train, epochs=50):
 # Build and train the model with data augmentation
 model = build_model()
 history_with_augmentation = train_model_with_augmentation(model, X_train, y_train)
+
+# Load trained model
+model.save('model/digit_recognizer_model.h5')
+
+# Function to predict digit from image data
+def predict_digit(image_data):
+    # Load trained model
+    model = load_model('model/digit_recognizer_model.h5')
+    # Reshape image data to match model input shape
+    image_data = image_data.reshape(-1, 28, 28, 1)
+    # Predict digit
+    prediction = model.predict_classes(image_data)[0]
+    return prediction
