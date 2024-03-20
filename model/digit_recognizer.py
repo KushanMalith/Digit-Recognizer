@@ -10,8 +10,8 @@ train_data = pd.read_csv('data/train.csv')
 test_data = pd.read_csv('data/test.csv')
 
 # Separate features and labels
-X_train = train_data.drop('label', axis=1) / 255.0
-y_train = train_data['label']
+y_train = train_data['pixel0']  # Use the first column as labels
+X_train = train_data.drop(columns=['pixel0'], axis=1) / 255.0  # Exclude the first column containing labels
 
 # Reshape input data to match the expected shape
 X_train = X_train.values.reshape(-1, 28, 28, 1)
