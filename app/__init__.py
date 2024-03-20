@@ -24,10 +24,12 @@ def upload_file():
         file = request.files['file']
         if file:
             image = Image.open(file.stream)
-            digit = predict_digit(model, image)
+            # Convert image data to a format suitable for prediction
+            image_data = np.array(image).reshape(-1, 28, 28, 1)
+            digit = predict_digit(image_data)
             return render_template('index.html', digit=digit)
     return render_template('index.html')
-
+    
 # To run the Flask application
 if __name__ == '__main__':
     app.run()
