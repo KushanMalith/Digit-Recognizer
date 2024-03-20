@@ -5,14 +5,15 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import load_model
 
 # Load datasets
 train_data = pd.read_csv('data/train.csv')
 test_data = pd.read_csv('data/test.csv')
 
 # Separate features and labels
-y_train = train_data['label']  # Use 'label' column as labels
-X_train = train_data.drop(columns=['label'], axis=1) / 255.0  # Exclude 'label' column and normalize pixel values
+y_train = train_data['pixel0']  # Use 'pixel0' column as labels
+X_train = train_data.drop(columns=['pixel0'], axis=1) / 255.0  # Exclude 'pixel0' column and normalize pixel values
 
 # Reshape input data to match the expected shape
 X_train = X_train.values.reshape(-1, 28, 28, 1)
@@ -61,13 +62,6 @@ def train_model_with_augmentation(model, X_train, y_train, epochs=50):
     
     return history
 
-# Build and train the model with data augmentation
-model = build_model()
-history_with_augmentation = train_model_with_augmentation(model, X_train, y_train)
-
-# Load trained model
-model.save('model/digit_recognizer_model.h5')
-
 # Function to predict digit from image data
 def predict_digit(image_data):
     # Load trained model
@@ -77,3 +71,7 @@ def predict_digit(image_data):
     # Predict digit
     prediction = model.predict_classes(image_data)[0]
     return prediction
+
+# Build and train the model with data augmentation
+model = build_model()
+history_with_augmentation = train_model_with_augmentation(model, X_train, y_train)
