@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digit Recognition</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="app">
-        <div>
-            <h1>Digit Recognition</h1>
-            <input type="file" id="image-upload" accept="image/*">
-            <button id="clear-prediction">Clear Prediction</button>
-            <button id="refresh-prediction">Refresh Prediction</button>
-        </div>
-        <div id="predicted-digit">Predicted Digit: </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+document.addEventListener('DOMContentLoaded', function() {
+    const imageUpload = document.getElementById('image-upload');
+    const submitButton = document.getElementById('submit-button');
+    const refreshButton = document.getElementById('refresh-button');
+    const predictedDigit = document.getElementById('predicted-digit');
+
+    submitButton.addEventListener('click', function() {
+        // Code to handle image submission goes here
+        // For now, let's just display a placeholder digit
+        predictedDigit.innerText = 'Predicted Digit: 7';
+    });
+
+    refreshButton.addEventListener('click', function() {
+        // Code to refresh prediction goes here
+        // For now, let's just reset the predicted digit
+        predictedDigit.innerText = 'Predicted Digit: ';
+    });
+});
