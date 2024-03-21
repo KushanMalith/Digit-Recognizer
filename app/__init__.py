@@ -14,6 +14,9 @@ from digit_recognizer import build_model, predict_digit
 # Create a Flask application instance
 app = Flask(__name__)
 
+# Configure the static folder
+app.static_folder = 'static'
+
 # Define a route for handling file uploads
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
