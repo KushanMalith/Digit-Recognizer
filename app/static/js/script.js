@@ -1,12 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // To check if there's a predicted digit
-    const predictedDigit = document.querySelector('#predicted-digit');
+    const imageUpload = document.getElementById('image-upload');
+    const submitButton = document.getElementById('submit-button');
+    const refreshButton = document.getElementById('refresh-button');
+    const predictedDigit = document.getElementById('predicted-digit');
 
-    // Check if predicted digit element exists and its innerText is not empty
-    if (predictedDigit && predictedDigit.innerText.trim() !== 'Predicted Digit:') {
-        // Reload the page after 5 seconds
-        setTimeout(() => {
-            window.location.reload();
-        }, 5000); // 5000 milliseconds = 5 seconds
-    }
+    submitButton.addEventListener('click', function() {
+        const formData = new FormData();
+        formData.append('image', imageUpload.files[0]);
+
+        fetch('/predict', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            predictedDigit.innerText = 'Predicted Digit: ' + data.prediction;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            predictedDigit.innerText = 'Prediction failed. Please try again.';
+        });
+    });
+
+    refreshButton.addEventListener('click', function() {
+        predictedDigit.innerText = 'Predicted Digit: ';
+        imageUpload.value = ''; // Clear the file input
+    });
 });
