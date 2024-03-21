@@ -4,25 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digit Recognizer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="../../static/css/styles.css">
 </head>
 <body>
-    <h1>Digit Recognizer</h1>
-    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="upload-form">
-        <label for="file">Choose a file:</label>
-        <input type="file" name="file" id="file" accept="image/*">
-        <button type="submit">Upload</button>
-    </form>
-
-    <!-- Display error message if any -->
-    {% if error %}
-    <p>{{ error }}</p>
-    {% endif %}
-    <!-- Display predicted digit if available -->
-    {% if digit %}
-    <p id="predicted-digit">Predicted Digit: {{ digit }}</p>
-    {% endif %}
+    <div class="container">
+        <h1 class="title">Digit Recognizer</h1>
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="upload-form">
+            <label for="file" class="file-label">
+                <input type="file" name="file" id="file" accept="image/*">
+                <span class="file-text">Choose a file</span>
+            </label>
+            <button type="submit" class="upload-btn">Upload</button>
+        </form>
     
-    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+        <div id="prediction" class="prediction-container">
+            <p id="predicted-digit" class="predicted-digit">Predicted Digit: </p>
+        </div>
+    </div>
+
+    <script src="../../static/js/script.js" defer></script>
 </body>
 </html>
