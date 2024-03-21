@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digit Recognition</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Digit Recognizer</title>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Digit Recognition</h1>
-        <input type="file" id="image-upload">
+        <h1>Digit Recognizer</h1>
+        <input type="file" id="image-upload" accept="image/*">
         <button id="submit-button">Submit</button>
-        <button id="refresh-button">Refresh Prediction</button>
+        <button id="refresh-button">Refresh</button>
         <div id="predicted-digit">Predicted Digit: </div>
     </div>
-    <script src="script.js"></script>
+    <!-- Link to the JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
