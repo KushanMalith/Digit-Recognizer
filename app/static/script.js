@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     refreshButton.addEventListener('click', function() {
-        // Assuming you have a function to handle refreshing the prediction
+        // Function to handle refreshing the prediction
         refreshPrediction();
     });
 
     imageUploadInput.addEventListener('change', function() {
         const file = this.files[0];
         if (file) {
-            // Assuming you have a function to handle image prediction
+            // Function to handle image prediction
             predictDigitFromImage(file);
         }
     });
