@@ -5,14 +5,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const predictedDigit = document.getElementById('predicted-digit');
 
     submitButton.addEventListener('click', function() {
-        // Code to handle image submission goes here
-        // For now, let's just display a placeholder digit
-        predictedDigit.innerText = 'Predicted Digit: 7';
+        const formData = new FormData();
+        formData.append('image', imageUpload.files[0]);
+
+        fetch('/predict', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            predictedDigit.innerText = 'Predicted Digit: ' + data.prediction;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            predictedDigit.innerText = 'Prediction failed. Please try again.';
+        });
     });
 
     refreshButton.addEventListener('click', function() {
-        // Code to refresh prediction goes here
-        // For now, let's just reset the predicted digit
         predictedDigit.innerText = 'Predicted Digit: ';
+        imageUpload.value = ''; // Clear the file input
     });
 });
