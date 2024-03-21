@@ -1,18 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const imageUpload = document.getElementById('image-upload');
-    const submitButton = document.getElementById('submit-button');
-    const refreshButton = document.getElementById('refresh-button');
-    const predictedDigit = document.getElementById('predicted-digit');
-
-    submitButton.addEventListener('click', function() {
-        // Code to handle image submission goes here
-        // For now, let's just display a placeholder digit
-        predictedDigit.innerText = 'Predicted Digit: 7';
-    });
-
-    refreshButton.addEventListener('click', function() {
-        // Code to refresh prediction goes here
-        // For now, let's just reset the predicted digit
-        predictedDigit.innerText = 'Predicted Digit: ';
-    });
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digit Recognizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <input type="file" id="image-upload">
+    <button id="submit-button">Submit</button>
+    <button id="refresh-button">Refresh</button>
+    <div id="predicted-digit"></div>
+    <script src="script.js"></script>
+</body>
+</html>
