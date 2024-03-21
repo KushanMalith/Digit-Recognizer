@@ -1,47 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const predictedDigit = document.querySelector('#predicted-digit');
-    const clearButton = document.querySelector('#clear-prediction');
-    const refreshButton = document.querySelector('#refresh-prediction');
-    const imageUploadInput = document.querySelector('#image-upload');
+    const imageUpload = document.getElementById('image-upload');
+    const submitButton = document.getElementById('submit-button');
+    const refreshButton = document.getElementById('refresh-button');
+    const predictedDigit = document.getElementById('predicted-digit');
 
-    clearButton.addEventListener('click', function() {
-        predictedDigit.innerText = 'Predicted Digit: ';
-        imageUploadInput.value = '';
+    submitButton.addEventListener('click', function() {
+        // Code to handle image submission goes here
+        // For now, let's just display a placeholder digit
+        predictedDigit.innerText = 'Predicted Digit: 7';
     });
 
     refreshButton.addEventListener('click', function() {
-        // Function to handle refreshing the prediction
-        refreshPrediction();
-    });
-
-    imageUploadInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            // Function to handle image prediction
-            predictDigitFromImage(file);
-        }
+        // Code to refresh prediction goes here
+        // For now, let's just reset the predicted digit
+        predictedDigit.innerText = 'Predicted Digit: ';
     });
 });
-
-// Function to simulate refreshing the prediction
-function refreshPrediction() {
-    // Assuming you have a function to handle refreshing the prediction
-    // You would replace this with your actual refresh logic
-    const predictedDigit = Math.floor(Math.random() * 10); // Generate a random digit (0-9)
-    displayPrediction(predictedDigit);
-}
-
-// Function to predict digit from uploaded image
-function predictDigitFromImage(imageFile) {
-    // Example code to handle image prediction
-    // You would replace this with your actual prediction logic
-    // This is just a placeholder
-    const predictedDigit = Math.floor(Math.random() * 10); // Generate a random digit (0-9)
-    displayPrediction(predictedDigit);
-}
-
-// Function to display the predicted digit
-function displayPrediction(digit) {
-    const predictedDigitElement = document.querySelector('#predicted-digit');
-    predictedDigitElement.innerText = 'Predicted Digit: ' + digit;
-}
