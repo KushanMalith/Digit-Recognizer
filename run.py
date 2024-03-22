@@ -3,8 +3,8 @@ import sys
 import pandas as pd
 from model.digit_recognizer_train import build_model
 
-# Add the 'model' folder to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'model')))
+# Add the parent directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Load datasets
 train_data = pd.read_csv('data/train.csv')
