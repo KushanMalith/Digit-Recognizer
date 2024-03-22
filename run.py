@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-from digit_recognizer import build_model
+from digit_recognizer_train import build_model
 
 # Load datasets
 train_data = pd.read_csv('data/train.csv')
-# Assuming 'data/test.csv' is not used for training
+test_data = pd.read_csv('data/test.csv')
 
 # Separate features and labels
 y_train = train_data['pixel0']  # Use 'pixel0' column as labels
