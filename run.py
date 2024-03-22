@@ -11,8 +11,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 # Initialize Flask app
 app = Flask(__name__)
 
+# Define the directory path
+BASE_DIR = os.path.dirname(__file__)
+MODEL_DIR = os.path.join(BASE_DIR, 'model')
+
 # Load the trained model
-model = load_model('model/digit_recognizer_model.keras')
+model = load_model(os.path.join(MODEL_DIR, 'digit_recognizer_model.keras'))
 
 # Define route for home page
 @app.route('/')
