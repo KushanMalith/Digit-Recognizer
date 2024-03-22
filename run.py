@@ -2,6 +2,7 @@ import os
 import sys
 from flask import Flask, render_template, request, jsonify
 import numpy as np
+from PIL import Image
 from tensorflow.keras.models import load_model
 
 # Add the parent directory to the Python path
