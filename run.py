@@ -1,6 +1,10 @@
+import os
+import sys
 import pandas as pd
-import numpy as np
-from digit_recognizer_train import build_model
+from model.digit_recognizer_train import build_model
+
+# Add the 'model' folder to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'model')))
 
 # Load datasets
 train_data = pd.read_csv('data/train.csv')
