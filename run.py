@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(__file__)
 MODEL_DIR = os.path.join(BASE_DIR, 'model')
 
 # Load the trained model
-model = load_model(os.path.join(MODEL_DIR, 'digit_recognizer_model.keras'))
+model = load_model(os.path.join(MODEL_DIR, 'digit_recognizer_model.h5'))
 
 # Define route for home page
 @app.route('/')
