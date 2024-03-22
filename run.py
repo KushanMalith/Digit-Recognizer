@@ -4,7 +4,7 @@ import pandas as pd
 from model.digit_recognizer_train import build_model
 
 # Check if the trained model exists
-if os.path.exists('model/digit_recognizer_model.h5'):
+if os.path.exists('model/digit_recognizer_model.keras'):
     # Trained model exists, run prediction script
     os.system('python model/digit_recognizer_predict.py')
 else:
@@ -28,4 +28,4 @@ else:
     history = model.fit(X_train, y_train, epochs=50, validation_split=0.2)
 
     # Save the trained model
-    model.save('model/digit_recognizer_model.h5')
+    model.save('model/digit_recognizer_model.keras')
