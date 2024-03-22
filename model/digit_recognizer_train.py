@@ -66,4 +66,4 @@ model = build_model()
 history_with_augmentation = train_model_with_augmentation(model, X_train, y_train)
 
 # Save the trained model
-model.save('model/digit_recognizer_model.keras')
+model.save('model/digit_recognizer_model.h5')
