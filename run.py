@@ -1,49 +1,36 @@
 import os
-import sys
-from flask import Flask, render_template, request, jsonify
-import numpy as np
-from PIL import Image
-from tensorflow.keras.models import load_model
+import pandas as pd
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten
+from tensorflow.keras.callbacks import ModelCheckpoint
 
-# Add the parent directory to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Load datasets
+train_data = pd.read_csv('data/train.csv')
 
-# Initialize Flask app
-app = Flask(__name__)
+# Separate features and labels
+y_train = train_data['label']
+X_train = train_data.drop(columns=['label'], axis=1) / 255.0  # Normalize pixel values
 
-# Define the directory path
-BASE_DIR = os.path.dirname(__file__)
-MODEL_DIR = os.path.join(BASE_DIR, 'model')
+# Reshape input data to match the expected shape
+X_train = X_train.values.reshape(-1, 28, 28, 1)
 
-# Load the trained model
-model = load_model(os.path.join(MODEL_DIR, 'digit_recognizer_model.keras'))
+# Build the model
+model = Sequential([
+    Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(28, 28, 1)),
+    Conv2D(64, kernel_size=(3, 3), activation='relu'),
+    Flatten(),
+    Dense(10, activation='softmax')
+])
 
-# Define route for home page
-@app.route('/')
-def home():
-    return render_template('index.html')
+# Compile the model
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# Define route for prediction
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get image data from request
-    img_data = request.files['file']
-    # Process image data
-    img_arr = process_image(img_data)
-    # Make prediction
-    prediction = model.predict_classes(img_arr)
-    return jsonify({'prediction': str(prediction[0])})
+# Define callbacks
+checkpoint_path = 'model/digit_recognizer_model.h5'
+checkpoint_callback = ModelCheckpoint(filepath=checkpoint_path, save_best_only=True, save_weights_only=False)
 
-# Function to process image data
-def process_image(img_data):
-    # Convert image to grayscale and resize to 28x28
-    img = Image.open(img_data).convert('L').resize((28, 28))
-    # Convert image to numpy array and normalize pixel values
-    img_arr = np.array(img) / 255.0
-    # Reshape image array to match model input shape
-    img_arr = img_arr.reshape(-1, 28, 28, 1)
-    return img_arr
+# Train the model
+history = model.fit(X_train, y_train, epochs=50, validation_split=0.2, callbacks=[checkpoint_callback])
 
-# Run the app
-if __name__ == '__main__':
-    app.run(debug=True)
+# Save the trained model
+model.save(checkpoint_path)
