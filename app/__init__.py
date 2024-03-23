@@ -8,14 +8,11 @@ from PIL import Image
 # Append the parent directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model')))
 
-# Import functions from the digit_recognizer_predict module
-from digit_recognizer_predict import predict_digit
+# Import functions from the digit_recognizer module
+from digit_recognizer import build_model, predict_digit
 
 # Create a Flask application instance
 app = Flask(__name__)
-
-# Configure the static folder
-app.static_folder = 'static'
 
 # Define a route for handling file uploads
 @app.route('/', methods=['GET', 'POST'])
@@ -31,4 +28,4 @@ def upload_file():
 
 # To run the Flask application
 if __name__ == '__main__':
-    app.run()    
+    app.run()
