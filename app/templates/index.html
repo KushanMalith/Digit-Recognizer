@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digit Recognizer</title>
-    <!-- Link to the CSS file -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <script src="../../static/js/script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Digit Recognizer</h1>
-        <input type="file" id="image-upload" accept="image/*">
-        <button id="submit-button">Submit</button>
-        <button id="refresh-button">Refresh</button>
-        <div id="predicted-digit">Predicted Digit: </div>
-    </div>
-    <!-- Link to the JavaScript file -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <h1>Digit Recognizer</h1>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="upload-form">
+        <input type="file" name="file" id="file" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    {% if digit %}
+    <p>Predicted Digit: {{ digit }}</p>
+    {% endif %}
 </body>
 </html>
